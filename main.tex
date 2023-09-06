@@ -26,7 +26,7 @@ In this section, we introduce various cryptographic techniques we have considere
 
 \textbf{Trusted execution environment} is an isolated environment of a hardware computing device that allows to perform computations securely, separately from unprotected computations. The data is transferred to and from TEE in an encrypted form, and only decrypted inside the TEE. One of the most well-known examples of TEE are Intel SGX and Apple iOS Secure Enclave. 
 
-TEE has some advantages (e.g., performance, latency) compared to other cryptographic solutions, like multiparty computations and homomorphic encryption, which are often considered in similar contexts, and is used by multiple projects to provide privacy \citep{flash} \citep{secret}.
+TEE has some advantages (e.g., performance, latency) compared to other cryptographic solutions, like multiparty computations and homomorphic encryption, which are often considered in similar contexts, and is used by multiple projects to provide privacy \cite{flash} \cite{secret}.
 
 \subsection{Multiparty computations (MPC)}
 
@@ -40,21 +40,21 @@ Homomorphic encryption allows to perform operations on encrypted data without de
 
 \subsection{Witness encryption (WE)}
 
-\textbf{Witness encryption} \citep{we} is a type of encryption that generalises public-key encryption by allowing a public key be any NP problem and the corresponding private key, referred to as a witness, to be a solution to this problem. Witness encryption is a non-interactive primitive; it is relatively new (the first paper introducing it was published in 2013) and does not have well-known applications or practical implementations yet.
+\textbf{Witness encryption} \cite{we} is a type of encryption that generalises public-key encryption by allowing a public key be any NP problem and the corresponding private key, referred to as a witness, to be a solution to this problem. Witness encryption is a non-interactive primitive; it is relatively new (the first paper introducing it was published in 2013) and does not have well-known applications or practical implementations yet.
 
 \subsection{Functional encryption (FE)}
 
-\textbf{Functional encryption} \citep{fe} is a primitive that allows different parties to obtain the output of functions computed on the plaintext without seeing the plaintext. One of the applications of functional encryption is access control, where parties with different access levels have different visibility of the data. It is an active area of research and is not yet widely adopted.
+\textbf{Functional encryption} \cite{fe} is a primitive that allows different parties to obtain the output of functions computed on the plaintext without seeing the plaintext. One of the applications of functional encryption is access control, where parties with different access levels have different visibility of the data. It is an active area of research and is not yet widely adopted.
 
 
 \subsection{Searchable encryption (SE)}
 
-Searchable encryption \citep{se} is a cryptographic technique that enables searching on encrypted data using (encrypted) keywords. In comparison to homomorphic encryption, searchable encryption focuses on solving the specific problem of encrypted search and is optimised to solve this problem.
+Searchable encryption \cite{se} is a cryptographic technique that enables searching on encrypted data using (encrypted) keywords. In comparison to homomorphic encryption, searchable encryption focuses on solving the specific problem of encrypted search and is optimised to solve this problem.
 
 
 \subsection{co-SNARKs}
 
-Collaborative SNARKs \citep{cosnarks} allow multiple parties to cooperate to create a joint proof of knowledge. Typically, a SNARK prover holds a witness and creates a proof stating that the witness satisfies certain constraints. Co-SNARKs allow multiple provers, each of which holds only a share of a witness, to produce a single proof about the witness without explicitly reconstructing it. Co-SNARKs are constructed by applying MPC techniques to SNARKs.
+Collaborative SNARKs \cite{cosnarks} allow multiple parties to cooperate to create a joint proof of knowledge. Typically, a SNARK prover holds a witness and creates a proof stating that the witness satisfies certain constraints. Co-SNARKs allow multiple provers, each of which holds only a share of a witness, to produce a single proof about the witness without explicitly reconstructing it. Co-SNARKs are constructed by applying MPC techniques to SNARKs.
 
 \section{Application and Analysis}
 
@@ -77,7 +77,7 @@ This way users don't need to show their intents to the solver and the solver's s
 
 \hfill
 
-A downside of using TEE is that it is infamous for being broken regularly, multiple hardware attacks have been discovered over the years \citep{sgxfail} \citep{downfall}, along with other threats like side-channel attacks and covert channels \citep{flash}, when untrusted inputs might alter the program execution and leak private information. For these reasons, many consider TEE only helpful for defence in-depth but not as the main security component to rely on.
+A downside of using TEE is that it is infamous for being broken regularly, multiple hardware attacks have been discovered over the years \cite{sgxfail} \cite{downfall}, along with other threats like side-channel attacks and covert channels \cite{flash}, when untrusted inputs might alter the program execution and leak private information. For these reasons, many consider TEE only helpful for defence in-depth but not as the main security component to rely on.
 
 In case TEE is used as a primary tool to provide privacy, the exact technology (e.g. Intel SGX) has to be thoroughly examined to make sure the implementation is not vulnerable in the presence of various attacks.
 
@@ -101,7 +101,7 @@ Another aspect to pay attention to is the protocol complexity. Having a fairly n
 
 \hfill
 
-Combining the cost of the number of participants, the security assumptions, and the circuit size, we end up having a protocol that might be just too expensive to run. Examples show that a protocol of similar complexity for just two parties takes about 22.5 hours to execute and requires 33.7PB of data to be transmitted in the strongest security assumptions, and takes around 4 minutes and 6GB of data in a much stronger security model \citep{flash}.
+Combining the cost of the number of participants, the security assumptions, and the circuit size, we end up having a protocol that might be just too expensive to run. Examples show that a protocol of similar complexity for just two parties takes about 22.5 hours to execute and requires 33.7PB of data to be transmitted in the strongest security assumptions, and takes around 4 minutes and 6GB of data in a much stronger security model \cite{flash}.
 
 \subsection{Homomorphic encryption}
 
@@ -109,7 +109,7 @@ Using homomorphic encryption, each user would encrypt their intents, send them t
 
 \hfill
 
-It is known that having the ability to compare encrypted data to a known constant makes the homomorphic encryption system lose security \citep{databanks}, and in our setting, the solver has such ability, being a user themselves. Having an encrypted intent, the solver would produce their own encrypted intent, and see if the two intents match. If they do not, the solver would modify their intent and try again, repeating this process until the intents match, recovering the user's encrypted intent. Being able to ensure that the solver cannot be the user in this context might help to mitigate this issue.
+It is known that having the ability to compare encrypted data to a known constant makes the homomorphic encryption system lose security \cite{databanks}, and in our setting, the solver has such ability, being a user themselves. Having an encrypted intent, the solver would produce their own encrypted intent, and see if the two intents match. If they do not, the solver would modify their intent and try again, repeating this process until the intents match, recovering the user's encrypted intent. Being able to ensure that the solver cannot be the user in this context might help to mitigate this issue.
 
 \hfill
 
@@ -121,7 +121,7 @@ As we are trying to protect the intents, naturally, they would be the data to en
 
 \hfill
 
-In \citep{fe}, a functionality $F$ is defined as a function $F: K \times X \rightarrow \{0, 1\}$ described as a \textit{deterministic Turing machine} and the decryption function is defined such that $dec(sk, c) = y$, where $sk$ is the secret key, $c$ is the encrypted message, and $y$ is the output of the function.
+In \cite{fe}, a functionality $F$ is defined as a function $F: K \times X \rightarrow \{0, 1\}$ described as a \textit{deterministic Turing machine} and the decryption function is defined such that $dec(sk, c) = y$, where $sk$ is the secret key, $c$ is the encrypted message, and $y$ is the output of the function.
 
 Each shielded transaction contains multiple Halo2 proofs which all would have to be computed in the decryption function. Each proof involves generating some random parameters, e.g. blinding. Because a decryption function is described as a deterministic Turing machine, it is not possible to generate the randomness within the decryption function. Providing the randomness from outside raises even more questions. Who provides it? The solver's randomness is not safe to use. Provided by the user, the randomness would have to be fixed per intent.
 
@@ -188,7 +188,7 @@ Although we couldn't find a general solution, less general, case-specific soluti
 \section*{Acknowledgements}
 
 
-\nocitep{*}
+\nocite{*}
 \bibliography{ref.bib}
 
 \end{document}
