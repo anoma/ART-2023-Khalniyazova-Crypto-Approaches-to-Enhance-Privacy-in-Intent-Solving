@@ -10,23 +10,23 @@
 \begin{document}
 
 \maketitle
-\tableofcontents
+% \tableofcontents
 
 \section{Introduction}
 
 In the intent-centric terminology of Anoma, \textbf{solvers} are the actors who receive users' intents, turn them into transactions by matching intents together, and send the resulting transactions to the settlement engines. 
 
-Currently, intents are solved publicly, meaning that solvers can see the intents plaintext. Users have to trust that the solvers they interact with don't take advantage of them from knowing their intents. One of the ways to reduce the need for absolute trust is to apply cryptographic tools. In this report we consider various cryptographic approaches that could be potentially helpful to lower the amount of information that is required to be given to solvers in order to match intents and produce transactions.
+Currently, intents are solved publicly, meaning that solvers can see the intents plaintext. Users have to trust that the solvers they interact with do not take advantage of them from knowing their intents. One of the ways to reduce the need for absolute trust is to apply cryptographic tools. In this report we consider various cryptographic approaches that could be potentially helpful to lower the amount of information that is required to be given to solvers in order to match intents and produce transactions.
 
 \section{Tools}
 
-In this section we introduce various cryptographic techniques we have considered in the context of private solving. 
+In this section, we introduce various cryptographic techniques we have considered in the context of private solving. 
 
 \subsection{Trusted Execution Environment (TEE)}
 
-\textbf{Trusted execution environment} is an isolated environment of a hardware computing device that allows to perform computations securely, separately from unprotected computations. The data is transferred to and from TEE in an encrypted form, and only decrypted inside the TEE. One of the most well known examples of TEE are Intel SGX and Apple iOS Secure Enclave. 
+\textbf{Trusted execution environment} is an isolated environment of a hardware computing device that allows to perform computations securely, separately from unprotected computations. The data is transferred to and from TEE in an encrypted form, and only decrypted inside the TEE. One of the most well-known examples of TEE are Intel SGX and Apple iOS Secure Enclave. 
 
-TEE has some advantages (e.g. performance, latency) compared to other cryptographic solutions, like multiparty computations and homomorphic encryption, which are often considered in similar contexts, and is used by multiple projects to provide privacy \cite{flash} \cite{secret}.
+TEE has some advantages (e.g., performance, latency) compared to other cryptographic solutions, like multiparty computations and homomorphic encryption, which are often considered in similar contexts, and is used by multiple projects to provide privacy \cite{flash} \cite{secret}.
 
 \subsection{Multiparty computations (MPC)}
 
@@ -36,20 +36,20 @@ MPC frameworks is a tool used to write protocols computing arbitrary functions i
 
 \subsection{Homomorphic encryption (HE)}
 
-Homomorphic encryption allows to perform operations on encrypted data without decrypting the data: $f(E(x)) = E(f(x))$. There are two operations that are usually considered: addition and multiplication. If the homomorphic encryption scheme supports both operations computed unlimited amount of times, the encryption scheme is called fully homomorphic. If it supports either addition or multiplication on encrypted data, it is called partially homomorphic. Fully homomorphic encryption allows to perform arbitrary computations on encrypted data. It is a powerful cryptographic primitive that is being actively researched.
+Homomorphic encryption allows to perform operations on encrypted data without decrypting the data: $f(E(x)) = E(f(x))$. There are two operations that are usually considered: addition and multiplication. If the homomorphic encryption scheme supports both operations computed unlimited amount of times, the encryption scheme is called fully homomorphic. If it supports either addition or multiplication on encrypted data, it is called partially homomorphic. Fully homomorphic encryption allows us to perform arbitrary computations on encrypted data. It is a powerful cryptographic primitive that is being actively researched.
 
 \subsection{Witness encryption (WE)}
 
-\textbf{Witness encryption} \cite{we} is a type of encryption that generalises public-key encryption by allowing a public key be any NP problem and the corresponding private key, referred to as a witness, to be a solution to this problem. Witness encryption is a non-interactive primitive; it is relatively new (the first paper introducing it was published in 2013) and doesn't have well-known applications or practical implementations yet.
+\textbf{Witness encryption} \cite{we} is a type of encryption that generalises public-key encryption by allowing a public key be any NP problem and the corresponding private key, referred to as a witness, to be a solution to this problem. Witness encryption is a non-interactive primitive; it is relatively new (the first paper introducing it was published in 2013) and does not have well-known applications or practical implementations yet.
 
 \subsection{Functional encryption (FE)}
 
-\textbf{Functional encryption} \cite{fe} is a primitive that allows different parties to comobtain the output of functions computed on the plaintext without seeing the plaintext. One of the applications of functional encryption is access control, where parties with different access levels have different visibility of the data. It is an active area of research and is not widely adopted yet.
+\textbf{Functional encryption} \cite{fe} is a primitive that allows different parties to obtain the output of functions computed on the plaintext without seeing the plaintext. One of the applications of functional encryption is access control, where parties with different access levels have different visibility of the data. It is an active area of research and is not widely adopted yet.
 
 
 \subsection{Searchable encryption (SE)}
 
-Searchable encryption \cite{se} is a cryptographic technique that enables searching on encrypted data using (encrypted) keywords. In comparison to homomorphic encryption, searchable encryption focuses on solving the specific problem of encrypted search and is optimized to solve this problem.
+Searchable encryption \cite{se} is a cryptographic technique that enables searching on encrypted data using (encrypted) keywords. In comparison to homomorphic encryption, searchable encryption focuses on solving the specific problem of encrypted search and is optimised to solve this problem.
 
 
 \subsection{co-SNARKs}
