@@ -22,7 +22,7 @@ Currently, intents are solved publicly, meaning that solvers can see the intents
 
 In this section, we introduce various cryptographic techniques we have considered in the context of private solving. 
 
-\subsection{Trusted Execution Environment (TEE)}
+\subsection{Trusted Execution Environment (TEE)}\label{TEE}
 
 \textbf{Trusted execution environment} is an isolated environment of a hardware computing device that allows to perform computations securely, separately from unprotected computations. The data is transferred to and from TEE in an encrypted form, and only decrypted inside the TEE. One of the most well-known examples of TEE are Intel SGX and Apple iOS Secure Enclave. 
 
@@ -159,7 +159,7 @@ The table below contains the summary of the cryptographic approaches we have con
  Primitive & Results \\
 \hline
 \hline
-TEE & Hardware vulnerabilities, side channels, covert channels \\ 
+\hyperlinkTEE & Hardware vulnerabilities, side channels, covert channels \\ 
 \hline
 MPC & Scalability. Number of parties, circuit size, security assumptions \\ 
 \hline
@@ -185,8 +185,7 @@ Combining various cryptographic and noncryptographic techniques might allow for 
 
 Although we couldn't find a general solution, less general, case-specific solutions for private solving might be a good direction for future work. After all, not having a general solution is fine, as long as we have case-specific solutions for each case.
 
-\section*{Acknowledgements}
-
+% \section*{Acknowledgements}
 
 \nocite{*}
 \bibliography{ref.bib}
