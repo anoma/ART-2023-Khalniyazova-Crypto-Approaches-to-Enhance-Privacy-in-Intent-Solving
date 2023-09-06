@@ -14,7 +14,7 @@
 
 \section{Introduction}\label{intro}
 
-In the intent-centric terminology of Anoma, \textbf{solvers} are the actors who receive user intents, turn them into transactions by matching intents together, and send the resulting transactions to the settlement engines. 
+In the intent-centric terminology of Anoma, \emph{solvers} are the actors who receive user intents, turn them into transactions by matching intents together, and send the resulting transactions to the settlement engines. 
 
 The current approach to solving intents is public, allowing solvers access to plaintext intents. Users have to trust that the solvers with whom they interact do not take advantage of them from knowing their intents. One of the ways to reduce the need for absolute trust is to apply cryptographic tools. This report examines various cryptographic techniques that could be beneficial in reducing the amount of data that must be provided to solvers to match intent and produce valid transactions.
 
@@ -169,7 +169,7 @@ Collaborative SNARKs allow us to produce a joint proof from a shared witness, bu
 
 \section{Conclusion}\label{conclusion}
 
-The table below contains the summary of the cryptographic approaches we have considered so far. It is clear that there is no simple answer to the question of private solving; none of the cryptographic techniques appear to be sufficient on their own.
+The table below contains the summary of the cryptographic approaches we have considered so far. It is clear that there is no simple answer to the question of private solving; none of the cryptographic techniques appears to be sufficient on their own.
 
 \begin{center}
 \begin{tabular}{ cl } 
@@ -193,18 +193,17 @@ The table below contains the summary of the cryptographic approaches we have con
 \end{tabular}
 \end{center}
 
-Combining various cryptographic and noncryptographic techniques might allow for better practical privacy guarantees compared to the current state. With cryptographic approaches, there are two aspects to pay attention to:
+Combining various cryptographic and non-cryptographic techniques might allow for better practical privacy guarantees compared to the current state. With cryptographic approaches, there are two aspects to pay attention to:
 
 \begin{itemize}
     \item Solvers are users. Solvers can see as much as users can, so the approach used to keep the intents private should work against both users and solvers.
     \item Intents are matched together, and none of the participants are known in advance. Therefore, the privacy-preserving protocol for solving intents must not rely on static participants, it should scale well or be independent of the amount of parties.
 \end{itemize}
 
-Although we could not find a general solution, less general, case-specific solutions for private solving might be a promising direction for future work. After all, not having a general solution is fine, as long as we have case-specific solutions for each case.
+Although we were unable to find a general solution, less general, case-specific solutions for private solving might be a promising direction for future work. After all, not having a general solution is fine, as long as we have case-specific solutions for each case.
 
 % \section*{Acknowledgements}
 
-\nocite{*}
 \bibliography{ref.bib}
 
 \end{document}
