@@ -131,7 +131,7 @@ Another question is how to combine intents together in the decryption function. 
 
 \hfill
 
-Overall, functional encryption seems to be promising and it might be interesting to consider it in combination with other techniques, however, but it doesn't seem to be possible to use it on its own. It is also quite new and at the moment, there are no stable schemes that offer the required security guarantees and expected performance.
+Overall, functional encryption seems to be promising and it might be interesting to consider it in combination with other techniques, however, but it does not seem to be possible to use it on its own. It is also quite new and at the moment, there are no stable schemes that offer the required security guarantees and expected performance.
 
 %TODO: does it even make sense? can these functions take additional inputs provided in runtime? does it matter?
 
@@ -141,9 +141,9 @@ Witness encryption allows to decrypt a message if the party that is willing to d
 
 \subsection{Searchable Encryption}
 
-Searchable encryption seems to be a good option when the data we want to hide is not the same data we want to use as keywords. Unfortunately, it is not the case with intents.
+Searchable encryption seems to be a viable option when the data we want to hide is not the same data we want to use as keywords. Unfortunately, it is not the case with intents.
 
-Having intents encrypted with searchable encryption, a solver would look through intents and scan them for the required keywords. However, a malicious solver could always scan intents for all keywords available, essentially recovering the intent plaintexts. Considering that the solver can always be a user, limiting solver access to keywords would not help here: if users want their intents to be solved, they need to make sure the intent can be searched through by other users. 
+Having intents encrypted with searchable encryption, a solver would look through intents and scan them for the required keywords. However, a malicious solver could always scan intents for all available keywords, essentially recovering the intent plaintexts. Considering that the solver can always be a user, limiting solver access to keywords would not help here: if users want their intents to be solved, they need to make sure the intent can be searched through by other users. 
 
 \subsection{Collaborative SNARKs}
 
