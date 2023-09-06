@@ -26,7 +26,7 @@ In this section, we introduce various cryptographic techniques we have considere
 
 \textbf{Trusted execution environment} is an isolated environment of a hardware computing device that allows to perform computations securely, separately from unprotected computations. The data is transferred to and from TEE in an encrypted form, and only decrypted inside the TEE. One of the most well-known examples of TEE are Intel SGX and Apple iOS Secure Enclave. 
 
-TEE has some advantages (e.g., performance, latency) compared to other cryptographic solutions, like multiparty computations and homomorphic encryption, which are often considered in similar contexts, and is used by multiple projects to provide privacy \cite{flash} \cite{secret}.
+TEE has some advantages (e.g., performance, latency) compared to other cryptographic solutions, like multiparty computations and homomorphic encryption, which are often considered in similar contexts, and is used by multiple projects to provide privacy \citep{flash,secret}.
 
 \subsection{Multiparty computations (MPC)}
 
@@ -154,30 +154,29 @@ Collaborative SNARKs allow us to produce a joint proof from a shared witness, bu
 The table below contains the summary of the cryptographic approaches we have considered. It is clear that there is no simple answer to the question of private solving; none of the cryptographic techniques appear to be sufficient on their own.
 
 \begin{center}
-\begin{tabular}{ |c|c|c|c| } 
-\hline
+\begin{tabular}{ cl } 
+\toprule
  Primitive & Results \\
-\hline
-\hline
-\hyperlinkTEE & Hardware vulnerabilities, side channels, covert channels \\ 
-\hline
+\midrule
+\hyperlink{TEE}{TEE} & Hardware vulnerabilities, side channels, covert channels \\ 
+\midrule
 MPC & Scalability. Number of parties, circuit size, security assumptions \\ 
-\hline
+\midrule
 HE & Comparing to a known constant allows the recovery of a message\\ 
-\hline
+\midrule
 FE & Impossible to obtain randomness. Complexity and feasibility are questioned \\ 
-\hline
-WE & Doesn't allow performing private computations \\ 
-\hline
+\midrule
+WE & Does not allow performing private computations \\ 
+\midrule
 SE & Search keyword coincides with the data being hidden\\ 
-\hline
+\midrule
 Co-SNARKs & Do not allow to perform private computations \\ 
-
-\hline
+\bottomrule
 \end{tabular}
 \end{center}
 
 Combining various cryptographic and noncryptographic techniques might allow for better practical privacy guarantees compared to the current state. With cryptographic approaches, there are two aspects to pay attention to:
+
 \begin{itemize}
     \item Solvers are users. Solvers can see as much as users can, so the approach used to keep the intents private should work against both users and solvers.
     \item Intents are matched together, and none of the participants are known in advance. Therefore, the privacy-preserving protocol for solving intents must not rely on static participants, it should scale well or be independent of the amount of parties.
