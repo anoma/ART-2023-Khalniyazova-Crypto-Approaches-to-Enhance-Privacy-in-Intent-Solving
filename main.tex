@@ -1,19 +1,24 @@
-\documentclass[final]{msc}
+\documentclass[
+    9pt,            % 8-20pt possible
+    % twocolumn,      % switch, use twocolumn layout
+    techreport,        % select between  ``techreport'', ``report'', ``article'', ``commun'', ``persp'' and ``review''
+    % lineno,         % switch, adds line numbering
+    % tocfig,         % switch, use a TOC figure at the top (place in ./figs)
+    % SI,             % switch to Supplemental Information format, not compatible with twocolumn
+    affiltop,       % switch, put affiliations under authors (instead of footnote)
+    % nofootprint,    % do not add "Preprint" in footer
+    % nofootdate,     % do not add date in footer
+    % debug,          % switch, add debugging boxes
+    % draft,          % for quick compilations (no figures, references etc)
+]{art}
 
-\input{preambule}
+\input{metadata.tex}
+\input{macros.tex}
+
 \begin{document}
-\input{metadata}
 
-\begin{abstract}
-
-In this report, we are considering cryptographic approaches that could be used to enhance privacy during the phase of solving intents. Both well-known solutions like TEE, multiparty computations and homomorphic encryption and more exotic primitives like functional encryption, witness encryption, searchable encryption and collaborative SNARKs are considered. We identify the limiting factors for each primitive and provide a summary of the results.
-
-\end{abstract}
-
-\begin{keywords}
-intents, private solving, multiparty computation, trusted execution environment, homomorphic encryption, functional encryption, witness encryption, searchable encryption, collaborative SNARKs
-\end{keywords}
 \maketitle
+\tableofcontents
 
 \section{Introduction}
 
