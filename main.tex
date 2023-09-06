@@ -12,165 +12,183 @@
 \maketitle
 % \tableofcontents
 
-\section{Introduction}
+\section{Introduction}\label{intro}
 
 In the intent-centric terminology of Anoma, \textbf{solvers} are the actors who receive user intents, turn them into transactions by matching intents together, and send the resulting transactions to the settlement engines. 
 
-Currently, intents are solved publicly, meaning that solvers can see the intents plaintext. Users have to trust that the solvers with whom they interact do not take advantage of them from knowing their intents. One of the ways to reduce the need for absolute trust is to apply cryptographic tools. This report examines various cryptographic techniques that could be beneficial in reducing the amount of data that must be provided to solvers to match intent and produce valid transactions.
+The current approach to solving intents is public, allowing solvers access to plaintext intents. Users have to trust that the solvers with whom they interact do not take advantage of them from knowing their intents. One of the ways to reduce the need for absolute trust is to apply cryptographic tools. This report examines various cryptographic techniques that could be beneficial in reducing the amount of data that must be provided to solvers to match intent and produce valid transactions.
 
-\section{Tools}
+\section{Cryptographic Tools}\label{tools}
 
 In this section, we introduce various cryptographic techniques we have considered in the context of private solving. 
 
-\subsection{Trusted Execution Environment (TEE)}\label{TEE}
+\subsection{Trusted execution environment}\label{TEE}
 
-\textbf{Trusted execution environment} is an isolated environment of a hardware computing device that allows to perform computations securely, separately from unprotected computations. The data is transferred to and from TEE in an encrypted form, and only decrypted inside the TEE. One of the most well-known examples of TEE are Intel SGX and Apple iOS Secure Enclave. 
+\textbf{Trusted execution environment}~(TEE) is an isolated environment of a
+hardware computing device that allows to perform computations securely,
+separately from unprotected computations. The data is transferred to and from
+TEE in an encrypted form, and only decrypted inside the TEE. One of the most
+well-known examples of TEE are Intel SGX and Apple iOS Secure Enclave. 
 
-TEE has some advantages (e.g., performance, latency) compared to other cryptographic solutions, like multiparty computations and homomorphic encryption, which are often considered in similar contexts, and is used by multiple projects to provide privacy \citep{flash,secret}.
+TEE has some advantages (e.g., performance, latency) compared to other cryptographic solutions, like multiparty computations and homomorphic encryption, which are often considered in similar contexts, and is used by multiple projects to provide privacy~\citep{flash,secret}.
 
-\subsection{Multiparty computations (MPC)}
+\subsection{Multiparty computations}\label{MPC}
 
-\textbf{Multiparty computations} allows multiple parties to compute a public function together. Each party holds a secret share that they use to compute their public shares, which can be revealed to other parties. Communicating with each other and performing computations on public shares, parties jointly compute the desired function's output. 
+\textbf{Multiparty computations}~(MPC) allows multiple parties to compute a public function together. Each party holds a secret share that they use to compute their public shares, which can be revealed to other parties. Parties jointly compute the output of the desired function by communicating and performing computations on public shares.
 
 MPC frameworks is a tool used to write protocols computing arbitrary functions in the MPC settings. Such frameworks provide a language to define secret shares and the function to compute. The program then is compiled to a circuit that will be run by the protocol participants.
 
-\subsection{Homomorphic encryption (HE)}
+\subsection{Homomorphic encryption}\label{HE}
 
-Homomorphic encryption allows to perform operations on encrypted data without decrypting the data: $f(E(x)) = E(f(x))$. There are two operations that are usually considered: addition and multiplication. If the homomorphic encryption scheme supports both operations computed unlimited amount of times, the encryption scheme is called fully homomorphic. If it supports either addition or multiplication on encrypted data, it is called partially homomorphic. Fully homomorphic encryption allows us to perform arbitrary computations on encrypted data. It is a powerful cryptographic primitive that is being actively researched.
+Homomorphic encryption~(HE) allows performing operations on encrypted data without decrypting the data. This can be represented as: 
+$$f(E(x)) = E(f(x)),$$ 
+where
+\begin{itemize}
+\item $E(x)$ denotes the encryption of the data $x$.
+\item $f$ represents the operation being performed.
+\item $f(E(x))$ signifies performing the operation on the encrypted data.
+\item $E(f(x))$ indicates the encryption of the operation performed on the original data.
+\end{itemize}
 
-\subsection{Witness encryption (WE)}
+There are two operations that are usually considered here: addition and multiplication. If the homomorphic encryption scheme supports both operations computed unlimited amount of times, the encryption scheme is called fully homomorphic. If it supports either addition or multiplication on encrypted data, it is called partially homomorphic. Fully homomorphic encryption allows us to perform arbitrary computations on encrypted data. It is a powerful cryptographic primitive that is being actively researched.
 
-\textbf{Witness encryption} \cite{we} is a type of encryption that generalises public-key encryption by allowing a public key be any NP problem and the corresponding private key, referred to as a witness, to be a solution to this problem. Witness encryption is a non-interactive primitive; it is relatively new (the first paper introducing it was published in 2013) and does not have well-known applications or practical implementations yet.
+\subsection{Witness encryption}\label{WE}
 
-\subsection{Functional encryption (FE)}
+\textbf{Witness encryption} (WE) is an advanced form of public-key encryption.
+In WE, any NP problem can serve as a public key, and its solution, termed as a
+witness, acts as the corresponding private key~\citep{we}. Witness encryption
+is a non-interactive primitive; it is relatively new (the first paper
+introducing it was published in 2013) and does not have well-known applications
+or practical implementations yet.
 
-\textbf{Functional encryption} \cite{fe} is a primitive that allows different parties to obtain the output of functions computed on the plaintext without seeing the plaintext. One of the applications of functional encryption is access control, where parties with different access levels have different visibility of the data. It is an active area of research and is not yet widely adopted.
+\subsection{Functional encryption}\label{FE}
+
+\textbf{Functional encryption} (FE) is a primitive that allows different parties
+to obtain the output of functions computed on the plaintext without seeing the
+plaintext~\citep{fe}. One of the applications of functional encryption is access
+control, where parties with different access levels have different visibility of
+the data. It is an active area of research and is not yet widely adopted.
+
+\subsection{Searchable encryption }\label{SE}
+
+Searchable encryption (SE) is a cryptographic technique that enables searching
+on encrypted data using (encrypted) keywords~\citep{se}. In comparison to
+homomorphic encryption, searchable encryption focuses on solving the specific
+problem of encrypted search and is optimised to solve this problem.
 
 
-\subsection{Searchable encryption (SE)}
+\subsection{Co-SNARKs}\label{CoSNARKs}
 
-Searchable encryption \cite{se} is a cryptographic technique that enables searching on encrypted data using (encrypted) keywords. In comparison to homomorphic encryption, searchable encryption focuses on solving the specific problem of encrypted search and is optimised to solve this problem.
+Collaborative SNARKs allow multiple parties to cooperate to create a joint proof of knowledge~\citep{cosnarks}. Typically, a SNARK prover holds a witness and creates a proof stating that the witness satisfies certain constraints. Co-SNARKs allow multiple provers, each of which holds only a share of a witness, to produce a single proof about the witness without explicitly reconstructing it. Co-SNARKs are constructed by applying MPC techniques to SNARKs.
 
-
-\subsection{co-SNARKs}
-
-Collaborative SNARKs \cite{cosnarks} allow multiple parties to cooperate to create a joint proof of knowledge. Typically, a SNARK prover holds a witness and creates a proof stating that the witness satisfies certain constraints. Co-SNARKs allow multiple provers, each of which holds only a share of a witness, to produce a single proof about the witness without explicitly reconstructing it. Co-SNARKs are constructed by applying MPC techniques to SNARKs.
-
-\section{Application and Analysis}
+\section{Application and Analysis}\label{analysis}
 
 In this section, we consider how the cryptographic techniques introduced above can be applied to increase user privacy in the solving phase.
 
-The goal is to let users keep their intents secret, but still allow them to work with solvers to produce shielded transactions that satisfy the intents of all involved users. Instead of sending raw intents, users would share some non-sensitive data with solvers (e.g. encrypted intents). This data should be enough for the solvers to produce shielded transactions that satisfy the intents. The solver's algorithm might be public or private. 
+The goal is to let users keep their intents secret, but still allow them to work with solvers to produce shielded transactions that satisfy the intents of all involved users. Instead of sending raw intents, users would share some non-sensitive data with solvers (e.g., encrypted intents). This data should be enough for the solvers to produce shielded transactions that satisfy the intents. The solver's algorithm might be public or private. 
 
 We are considering the situation where a solver is a mediator of the user interaction but might also be a user themselves. The scenario where users solve their intents themselves without an explicit mediator does not seem to significantly affect the results of the analysis.
 
-\subsection{Trusted Execution Environment}
+\subsection{TEE}\label{TEE-expanded}
 
-In our scenario, TEEs can be used as follows.
+The usage of TEEs in the Anoma scenario can be outlined as follows.
+
 \begin{itemize}
-    \item Users encrypt their intents and send them to TEE. Only TEE can decrypt the intents
-    \item A solver sends their solving strategy to TEE
-    \item TEE decrypts the intents and runs the solving algorithm on them, outputting a shielded transaction that satisfies the intents
+    \item Users encrypt their intents and send them to TEE. Only TEE can decrypt the intents.
+    \item A solver sends their solving strategy to TEE.
+    \item TEE decrypts the intents and runs the solving algorithm on them, outputting a shielded transaction that satisfies the intents.
 \end{itemize}
 
-This way users don't need to show their intents to the solver and the solver's strategy is independent of the intents being processed. The solver's strategy must be proven not to violate any rules and not take advantage of the users (beyond expected). If the strategy is public, it can be reviewed publicly and proven to be the same as the one sent to TEE. If the strategy is private, zero-knowledge proofs might be used to prove the compliance with the defined policy.
+This way users do not need to show their intents to the solver and the solver's strategy is independent of the intents being processed. The solver's strategy must be proven not to violate any rules and not take advantage of the users (beyond expected). If the strategy is public, it can be reviewed publicly and proven to be the same as the one sent to TEE. If the strategy is private, zero-knowledge proofs might be used to prove the compliance with the defined policy.
 
-\hfill
+A downside of using TEE is that it is infamous for being broken regularly,
+multiple hardware attacks have been discovered over the years
+\citep{sgxfail,downfall}, along with other threats like side-channel attacks and
+covert channels~\citep{flash}, when untrusted inputs might alter the program
+execution and leak private information. For these reasons, many consider TEE
+only helpful for defence in-depth but not as the main security component to rely
+on.
 
-A downside of using TEE is that it is infamous for being broken regularly, multiple hardware attacks have been discovered over the years \cite{sgxfail} \cite{downfall}, along with other threats like side-channel attacks and covert channels \cite{flash}, when untrusted inputs might alter the program execution and leak private information. For these reasons, many consider TEE only helpful for defence in-depth but not as the main security component to rely on.
-
-In case TEE is used as a primary tool to provide privacy, the exact technology (e.g. Intel SGX) has to be thoroughly examined to make sure the implementation is not vulnerable in the presence of various attacks.
+In case TEE is used as a primary tool to provide privacy, the exact technology
+(e.g., Intel SGX) has to be thoroughly examined to make sure the implementation
+is not vulnerable in the presence of various attacks.
 
 \subsection{Multiparty computation}
 
 In the defined context, users would hold their intents as private shares, and the solver's share would be the solving strategy. The result of the execution of the MPC protocol is a shielded transaction that satisfies the intents of all users involved in a transaction.
 
-\hfill
-
-One of the disadvantages of using MPC protocols is that solving intents, we cannot process one intent at a time (because intents of multiple users are matched together), and because it cannot be known in advance what intents will be matched, all users that want to have a chance for their intents to be satisfied would have to participate in the MPC protocol. For the same reason, some of the intents submitted to the MPC protocol will not even be included in the produced transaction.
+One of the disadvantages of using MPC protocols is that solving intents, we cannot process one intent at a time (because intents of multiple users are matched together), and because it cannot be known in advance what intents will be matched, all users that want to have a chance for their intents to be satisfied would have to participate in the MPC protocol. For the same reason, some intents submitted to the MPC protocol will not even be included in the produced transaction.
 
 Many of the MPC protocols are limited in the amount parties they can support, and the protocols that support a large enough number or even arbitrary number of parties have the communication cost going up (link) with the amount of participants.
 
-\hfill
-
 Another thing to take into account is the security model of the MPC protocol in use. Is it honest majority or dishonest majority? Does it support aborts, does it work in the malicious adversary settings? All of these factors directly affect the number of rounds, the amount of data transmitted, and the computation complexity. Generally, the weaker the assumptions are, the more expensive it will be to run the protocol.
-
-\hfill
 
 Another aspect to pay attention to is the protocol complexity. Having a fairly non-trivial protocol that involves communication of large amount of parties with evaluation of the solving strategy, computing zero-knowledge proofs to produce shielded transactions as an output might sum up into a relatively large circuit.
 
-\hfill
+Combining the cost of the number of participants, the security assumptions, and the circuit size, we end up having a protocol that might be just too expensive to run. Examples show that a protocol of similar complexity for just two parties takes about 22.5 hours to execute and requires 33.7PB of data to be transmitted in the strongest security assumptions, and takes around 4 minutes and 6GB of data in a much stronger security model \citep{flash}.
 
-Combining the cost of the number of participants, the security assumptions, and the circuit size, we end up having a protocol that might be just too expensive to run. Examples show that a protocol of similar complexity for just two parties takes about 22.5 hours to execute and requires 33.7PB of data to be transmitted in the strongest security assumptions, and takes around 4 minutes and 6GB of data in a much stronger security model \cite{flash}.
-
-\subsection{Homomorphic encryption}
+\subsection{Homomorphic encryption}\label{HE-expanded}
 
 Using homomorphic encryption, each user would encrypt their intents, send them to the solver, and the solver would match the encrypted intents to produce a shielded transaction.
 
-\hfill
-
-It is known that having the ability to compare encrypted data to a known constant makes the homomorphic encryption system lose security \cite{databanks}, and in our setting, the solver has such ability, being a user themselves. Having an encrypted intent, the solver would produce their own encrypted intent, and see if the two intents match. If they do not, the solver would modify their intent and try again, repeating this process until the intents match, recovering the user's encrypted intent. Being able to ensure that the solver cannot be the user in this context might help to mitigate this issue.
-
-\hfill
+It is known that having the ability to compare encrypted data to a known constant makes the homomorphic encryption system lose security \citep{databanks}, and in our setting, the solver has such ability, being a user themselves. Having an encrypted intent, the solver would produce their own encrypted intent, and see if the two intents match. If they do not, the solver would modify their intent and try again, repeating this process until the intents match, recovering the user's encrypted intent. Being able to ensure that the solver cannot be the user in this context might help to mitigate this issue.
 
 Another concern is the performance of fully homomorphic encryption schemes. Although it is being actively developed, it might not be good enough to instantiate such a protocol without a noticeable loss in performance.
 
-\subsection{Functional Encryption}
+\subsection{Functional encryption}\label{FE-expanded}
 
 As we are trying to protect the intents, naturally, they would be the data to encrypt using functional encryption. What will the decryption function(s) be? The expected result of the computation of private solving is a shielded transaction, meaning that the decryption function's output would have to be a shielded transaction.
 
-\hfill
+In \citep{fe}, a functionality $F$ is defined as a function $F: K \times X
+\rightarrow \{0, 1\}$ described as a \textit{deterministic Turing machine}. The
+decryption function is defined as $\mathsf{dec}(sk, c) = y$, where $sk$
+represents the secret key, $c$ denotes the encrypted message, and $y$ is the
+function's output.
 
-In \cite{fe}, a functionality $F$ is defined as a function $F: K \times X \rightarrow \{0, 1\}$ described as a \textit{deterministic Turing machine} and the decryption function is defined such that $dec(sk, c) = y$, where $sk$ is the secret key, $c$ is the encrypted message, and $y$ is the output of the function.
-
-Each shielded transaction contains multiple Halo2 proofs which all would have to be computed in the decryption function. Each proof involves generating some random parameters, e.g. blinding. Because a decryption function is described as a deterministic Turing machine, it is not possible to generate the randomness within the decryption function. Providing the randomness from outside raises even more questions. Who provides it? The solver's randomness is not safe to use. Provided by the user, the randomness would have to be fixed per intent.
-
-\hfill
+Each shielded transaction contains multiple Halo2 proofs which all would have to be computed in the decryption function. Each proof involves generating some random parameters, e.g., blinding. Because a decryption function is described as a deterministic Turing machine, it is not possible to generate the randomness within the decryption function. Providing the randomness from outside raises even more questions. Who provides it? The solver's randomness is not safe to use. Provided by the user, the randomness would have to be fixed per intent.
 
 Another question is how to combine intents together in the decryption function. It would have to take other intents as inputs, decrypt them (the decryption keys would also have to be provided in the input), and perform the rest of the computations. Is it possible to make sure the solver doesn't decrypt the input intents? The level of complexity and feasibility of this scheme are also questioned.
 
-\hfill
-
-Overall, functional encryption seems to be promising and it might be interesting to consider it in combination with other techniques, however, but it does not seem to be possible to use it on its own. It is also quite new and at the moment, there are no stable schemes that offer the required security guarantees and expected performance.
+Overall, functional encryption seems to be promising, and it might be interesting to consider it in combination with other techniques, however, but it does not seem to be possible to use it on its own. It is also quite new and at the moment, there are no stable schemes that offer the required security guarantees and expected performance.
 
 %TODO: does it even make sense? can these functions take additional inputs provided in runtime? does it matter?
 
-\subsection{Witness Encryption}
+\subsection{Witness encryption}\label{WE-expanded}
 
-Witness encryption allows to decrypt a message if the party that is willing to decrypt it knows a solution of some NP problem, otherwise witness encryption schemes act like vanilla encryption schemes. That means witness encryption does not allow to operate on encrypted data and decryption, unlike in the case of functional encryption, fully reveals the plaintext. Matching intents encrypted with witness encryption would require decrypting them, which does not fulfill our requirements.
+Witness encryption allows to decrypt a message if the party that is willing to decrypt it knows a solution of some NP problem, otherwise witness encryption schemes act like vanilla encryption schemes. That means witness encryption does not allow operating on encrypted data and decryption, unlike in the case of functional encryption, fully reveals the plaintext. Matching intents encrypted with witness encryption would require decrypting them, which does not fulfill our requirements.
 
-\subsection{Searchable Encryption}
+\subsection{Searchable encryption}\label{SE-expanded}
 
 Searchable encryption seems to be a viable option when the data we want to hide is not the same data we want to use as keywords. Unfortunately, it is not the case with intents.
 
 Having intents encrypted with searchable encryption, a solver would look through intents and scan them for the required keywords. However, a malicious solver could always scan intents for all available keywords, essentially recovering the intent plaintexts. Considering that the solver can always be a user, limiting solver access to keywords would not help here: if users want their intents to be solved, they need to make sure the intent can be searched through by other users. 
 
-\subsection{Collaborative SNARKs}
+\subsection{Collaborative SNARKs}\label{co-SNARKs-expanded}
 
 Collaborative SNARKs allow us to produce a joint proof from a shared witness, but do not allow us to perform computations, which is the result we want to produce. Because of that, collaborative SNARKs don't seem to be applicable in our context.
 
-\section{Conclusion}
+\section{Conclusion}\label{conclusion}
 
-The table below contains the summary of the cryptographic approaches we have considered. It is clear that there is no simple answer to the question of private solving; none of the cryptographic techniques appear to be sufficient on their own.
+The table below contains the summary of the cryptographic approaches we have considered so far. It is clear that there is no simple answer to the question of private solving; none of the cryptographic techniques appear to be sufficient on their own.
 
 \begin{center}
 \begin{tabular}{ cl } 
 \toprule
  Primitive & Results \\
 \midrule
-\hyperlink{TEE}{TEE} & Hardware vulnerabilities, side channels, covert channels \\ 
+\hyperref[TEE]{TEE} & Hardware vulnerabilities, side channels, covert channels \\ 
 \midrule
-MPC & Scalability. Number of parties, circuit size, security assumptions \\ 
+\hyperref[MPC]{MPC} & Scalability. Number of parties, circuit size, security assumptions \\ 
 \midrule
-HE & Comparing to a known constant allows the recovery of a message\\ 
+\hyperref[HE]{HE}& Comparing to a known constant allows the recovery of a message\\ 
 \midrule
-FE & Impossible to obtain randomness. Complexity and feasibility are questioned \\ 
+\hyperref[FE]{FE}& Impossible to obtain randomness. Complexity and feasibility are questioned \\ 
 \midrule
-WE & Does not allow performing private computations \\ 
+\hyperref[WE]{WE}& Do not allow performing private computations \\ 
 \midrule
-SE & Search keyword coincides with the data being hidden\\ 
+\hyperref[SE]{SE}& Search keyword coincides with the data being hidden\\ 
 \midrule
-Co-SNARKs & Do not allow to perform private computations \\ 
+\hyperref[CoSNARKs]{Co-SNARKs} & Do not allow performing private computations \\ 
 \bottomrule
 \end{tabular}
 \end{center}
@@ -182,7 +200,7 @@ Combining various cryptographic and noncryptographic techniques might allow for 
     \item Intents are matched together, and none of the participants are known in advance. Therefore, the privacy-preserving protocol for solving intents must not rely on static participants, it should scale well or be independent of the amount of parties.
 \end{itemize}
 
-Although we couldn't find a general solution, less general, case-specific solutions for private solving might be a good direction for future work. After all, not having a general solution is fine, as long as we have case-specific solutions for each case.
+Although we could not find a general solution, less general, case-specific solutions for private solving might be a promising direction for future work. After all, not having a general solution is fine, as long as we have case-specific solutions for each case.
 
 % \section*{Acknowledgements}
 
