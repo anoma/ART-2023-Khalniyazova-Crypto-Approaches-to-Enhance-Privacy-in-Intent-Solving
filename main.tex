@@ -44,10 +44,10 @@ Homomorphic encryption~(HE) allows performing operations on encrypted data witho
 $$f(E(x)) = E(f(x)),$$ 
 where
 \begin{itemize}
-\item $E(x)$ denotes the encryption of the data $x$.
-\item $f$ represents the operation being performed.
-\item $f(E(x))$ signifies performing the operation on the encrypted data.
-\item $E(f(x))$ indicates the encryption of the operation performed on the original data.
+\item $E()$ denotes the encryption function
+\item $f$ represents the homomorphic operation being performed.
+\item $f(E(x))$ signifies performing the homomorphic operation on the encrypted data.
+\item $E(f(x))$ indicates the encryption of the result of the homomorphic operation performed on the original data.
 \end{itemize}
 
 There are two operations that are usually considered here: addition and multiplication. If the homomorphic encryption scheme supports both operations computed unlimited amount of times, the encryption scheme is called fully homomorphic. If it supports either addition or multiplication on encrypted data, it is called partially homomorphic. Fully homomorphic encryption allows us to perform arbitrary computations on encrypted data. It is a powerful cryptographic primitive that is being actively researched.
