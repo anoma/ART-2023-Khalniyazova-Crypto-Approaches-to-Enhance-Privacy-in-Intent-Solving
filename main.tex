@@ -44,7 +44,7 @@ Homomorphic encryption~(HE) allows performing operations on encrypted data witho
 $$f(E(x)) = E(f(x)),$$ 
 where
 \begin{itemize}
-\item $E()$ denotes the encryption function
+\item $E$ denotes the encryption function
 \item $f$ represents the homomorphic operation being performed.
 \item $f(E(x))$ signifies performing the homomorphic operation on the encrypted data.
 \item $E(f(x))$ indicates the encryption of the result of the homomorphic operation performed on the original data.
@@ -141,7 +141,7 @@ As we are trying to protect the intents, naturally, they would be the data to en
 
 In \citep{fe}, a functionality $F$ is defined as a function $F: K \times X
 \rightarrow \{0, 1\}$ described as a \textit{deterministic Turing machine}. The
-decryption function is defined as $\mathsf{dec}(sk, c) = y$, where $sk$
+decryption function is defined as $\mathsf{dec}(k, c) = y$, where $k$
 represents the secret key, $c$ denotes the encrypted message, and $y$ is the
 function's output.
 
