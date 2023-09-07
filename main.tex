@@ -24,7 +24,7 @@ In this section, we introduce various cryptographic techniques we have considere
 
 \subsection{Trusted execution environment}\label{TEE}
 
-\textbf{Trusted execution environment}~(TEE) is an isolated environment of a
+Trusted execution environment~(TEE) is an isolated environment of a
 hardware computing device that allows to perform computations securely,
 separately from unprotected computations. The data is transferred to and from
 TEE in an encrypted form, and only decrypted inside the TEE. One of the most
@@ -34,7 +34,7 @@ TEE has some advantages (e.g., performance, latency) compared to other cryptogra
 
 \subsection{Multiparty computations}\label{MPC}
 
-\textbf{Multiparty computations}~(MPC) allows multiple parties to compute a public function together. Each party holds a secret share that they use to compute their public shares, which can be revealed to other parties. Parties jointly compute the output of the desired function by communicating and performing computations on public shares.
+Multiparty computations~(MPC) allows multiple parties to compute a public function together. Each party holds a secret share that they use to compute their public shares, which can be revealed to other parties. Parties jointly compute the output of the desired function by communicating and performing computations on public shares.
 
 MPC frameworks is a tool used to write protocols computing arbitrary functions in the MPC settings. Such frameworks provide a language to define secret shares and the function to compute. The program then is compiled to a circuit that will be run by the protocol participants.
 
@@ -54,7 +54,7 @@ There are two operations that are usually considered here: addition and multipli
 
 \subsection{Witness encryption}\label{WE}
 
-\textbf{Witness encryption} (WE) is an advanced form of public-key encryption.
+Witness encryption (WE) is an advanced form of public-key encryption.
 In WE, any NP problem can serve as a public key, and its solution, termed as a
 witness, acts as the corresponding private key~\citep{we}. Witness encryption
 is a non-interactive primitive; it is relatively new (the first paper
@@ -63,13 +63,13 @@ or practical implementations yet.
 
 \subsection{Functional encryption}\label{FE}
 
-\textbf{Functional encryption} (FE) is a primitive that allows different parties
+Functional encryption (FE) is a primitive that allows different parties
 to obtain the output of functions computed on the plaintext without seeing the
 plaintext~\citep{fe}. One of the applications of functional encryption is access
 control, where parties with different access levels have different visibility of
 the data. It is an active area of research and is not yet widely adopted.
 
-\subsection{Searchable encryption }\label{SE}
+\subsection{Searchable encryption}\label{SE}
 
 Searchable encryption (SE) is a cryptographic technique that enables searching
 on encrypted data using (encrypted) keywords~\citep{se}. In comparison to
@@ -77,7 +77,7 @@ homomorphic encryption, searchable encryption focuses on solving the specific
 problem of encrypted search and is optimised to solve this problem.
 
 
-\subsection{Co-SNARKs}\label{CoSNARKs}
+\subsection{Collaborative SNARKs}\label{CoSNARKs}
 
 Collaborative SNARKs allow multiple parties to cooperate to create a joint proof of knowledge~\citep{cosnarks}. Typically, a SNARK prover holds a witness and creates a proof stating that the witness satisfies certain constraints. Co-SNARKs allow multiple provers, each of which holds only a share of a witness, to produce a single proof about the witness without explicitly reconstructing it. Co-SNARKs are constructed by applying MPC techniques to SNARKs.
 
@@ -89,7 +89,7 @@ The goal is to let users keep their intents secret, but still allow them to work
 
 We are considering the situation where a solver is a mediator of the user interaction but might also be a user themselves. The scenario where users solve their intents themselves without an explicit mediator does not seem to significantly affect the results of the analysis.
 
-\subsection{TEE}\label{TEE-expanded}
+\subsection{Trusted execution environment}\label{TEE-expanded}
 
 The usage of TEEs in the Anoma scenario can be outlined as follows.
 
